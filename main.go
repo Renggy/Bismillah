@@ -1,7 +1,7 @@
 package main
 
 import (
-	registration "bismillah/controller"
+	"bismillah/handler"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,7 +12,9 @@ func main() {
 
 	api := router.Group("/api")
 	{
-		api.POST("/registration", registration.HandleRegistration)
+		api.POST("/registration", handler.HandleRegistration)
+		api.POST("/status_inqury", handler.HandlerStatusInquiry)
+		api.POST("/payment", handler.HandlePayment)
 	}
 
 	router.Run(":8080")
