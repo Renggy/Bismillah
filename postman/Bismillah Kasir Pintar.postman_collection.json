@@ -1,0 +1,136 @@
+{
+	"info": {
+		"_postman_id": "bb482d6c-2a2f-4298-a3f6-6d18cba5db8a",
+		"name": "Bismillah Kasir Pintar",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8193895"
+	},
+	"item": [
+		{
+			"name": "Registration",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//Get Timestamp//\r",
+							"var moment = require('moment');\r",
+							"pm.environment.set(\"timestampTrx\", moment().format(\"YYYYMMDDHHMMSS\"));\r",
+							"// var timestampTrx =\"20201123151515\";\r",
+							"var timestampTrx = pm.environment.get(\"timestampTrx\");\r",
+							"\r",
+							"//Initiate variables//\r",
+							"var cryptlib = require('crypto-js');\r",
+							"var iMid = \"IONPAYTEST\";\r",
+							"var merchantKey = \"33F49GnCMS1mFYlGXisbUDzVf2ATWCl9k3R++d5hDd3Frmuos/XLx8XhXpe+LDYAbpGKZYSwtlyyLOtS/8aD7A==\";\r",
+							"var refNo = \"ord\"+timestampTrx;\r",
+							"var amount = \"15000\";\r",
+							"\r",
+							"\r",
+							"//Generate merchantToken//\r",
+							"var merchantData = timestampTrx+iMid+refNo+amount+merchantKey;\r",
+							"var merTok = CryptoJS.SHA256(merchantData).toString(CryptoJS.enc.Hex);\r",
+							"pm.environment.set(\"merTok\", merTok);\r",
+							"pm.environment.set(\"iMid\", iMid);\r",
+							"pm.environment.set(\"amount\", amount);\r",
+							"pm.environment.set(\"refNo\", refNo);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"timeStamp\":\"{{timestampTrx}}\",\r\n\t\"iMid\":\"{{iMid}}\",\r\n\t\"payMethod\":\"01\",\r\n\t\"currency\":\"IDR\",\r\n\t\"amt\":\"{{amount}}\",\r\n\t\"referenceNo\":\"{{refNo}}\",\r\n\t\"goodsNm\":\"Test Transaction Nicepay\",\r\n\t\"billingNm\":\"John Doe\",\r\n\t\"billingPhone\":\"02110680000\",\r\n\t\"billingEmail\":\"email@merchant.com\",\r\n\t\"billingAddr\":\"Jalan Bukit Berbunga 22\",\r\n\t\"billingCity\":\"Jakarta\",\r\n\t\"billingState\":\"DKI Jakarta\",\r\n\t\"billingPostCd\":\"12345\",\r\n\t\"billingCountry\":\"Indonesia\",\r\n\t\"deliveryNm\":\"dobleh@merchant.com\",\r\n\t\"deliveryPhone\":\"12345678\",\r\n\t\"deliveryAddr\":\"Jalan Bukit Berbunga 22\",\r\n\t\"deliveryCity\":\"Jakarta\",\r\n\t\"deliveryState\":\"DKI Jakarta\",\r\n\t\"deliveryPostCd\":\"12345\",\r\n\t\"deliveryCountry\":\"Indonesia\",\r\n\t\"dbProcessUrl\":\"https://ptsv2.com/t/test-nicepay-v2\",\r\n\t\"vat\":\"\",\r\n\t\"fee\":\"\",\r\n\t\"notaxAmt\":\"\",\r\n\t\"description\":\"\",\r\n\t\"merchantToken\":\"{{merTok}}\",\r\n\t\"reqDt\":\"\",\r\n\t\"reqTm\":\"\",\r\n\t\"reqDomain\":\"merchant.com\",\r\n\t\"reqServerIP\":\"127.0.0.1\",\r\n\t\"reqClientVer\":\"\",\r\n\t\"userIP\":\"127.0.0.1\",\r\n\t\"userSessionID\":\"697D6922C961070967D3BA1BA5699C2C\",\r\n\t\"userAgent\":\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,like Gecko) Chrome/60.0.3112.101 Safari/537.36\",\r\n\t\"userLanguage\":\"ko-KR,en-US;q=0.8,ko;q=0.6,en;q=0.4\",\r\n\t\"cartData\":\"{\\\"count\\\":1,\\\"item\\\":[{\\\"img_url\\\":\\\"https:\\/\\/images.ctfassets.net\\/od02wyo8cgm5\\/14Njym0dRLAHaVJywF8WFL\\/1910357dd0da0ae38b61bc8ad3db86e4\\/cloudflyer_2-fw19-grey_lime-m-g1.png\\\",\\\"goods_name\\\":\\\"Shoe\\\",\\\"goods_detail\\\":\\\"Shoe\\\",\\\"goods_amt\\\":{{amt}}}]}\",\r\n\t\"instmntType\":\"2\",\r\n\t\"instmntMon\":\"1\",\r\n\t\"recurrOpt\":\"0\",\r\n\t\"bankCd\":\"CENA\",\r\n\t\"vacctValidDt\":\"\",\r\n\t\"vacctValidTm\":\"\",\r\n\t\"merFixAcctId\":\"\",\r\n\t\"mitraCd\":\"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/api/registration",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"registration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Status Inqury",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//Get Timestamp//\r",
+							"var moment = require('moment');\r",
+							"pm.environment.set(\"timestampTrx\", moment().format(\"YYYYMMDDHHMMSS\"));\r",
+							"var timestampTrx = pm.environment.get(\"timestampTrx\");\r",
+							"\r",
+							"//Initiate variables//\r",
+							"var iMid        = \"IONPAYTEST\";\r",
+							"var merchantKey = \"33F49GnCMS1mFYlGXisbUDzVf2ATWCl9k3R++d5hDd3Frmuos/XLx8XhXpe+LDYAbpGKZYSwtlyyLOtS/8aD7A==\";\r",
+							"var refNo       = \"ord20230713200755\";\r",
+							"var txid        = \"IONPAYTEST01202307132043012276\";\r",
+							"var amount      = \"15000\";\r",
+							"\r",
+							"//Generate merchantToken//\r",
+							"var merchantData = timestampTrx+iMid+refNo+amount+merchantKey;\r",
+							"var merTok = CryptoJS.SHA256(merchantData).toString(CryptoJS.enc.Hex);\r",
+							"pm.environment.set(\"merTok\", merTok);\r",
+							"pm.environment.set(\"iMid\", iMid);\r",
+							"pm.environment.set(\"amount\", amount);\r",
+							"pm.environment.set(\"refNo\", refNo);\r",
+							"pm.environment.set(\"txid\", txid);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"timeStamp\":\"{{timestampTrx}}\",\r\n\t\"tXid\":\"{{txid}}\",\r\n\t\"iMid\":\"{{iMid}}\",\r\n\t\"referenceNo\":\"{{refNo}}\",\r\n\t\"amt\":\"{{amount}}\",\r\n\t\"merchantToken\":\"{{merTok}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/api/status_inqury",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"status_inqury"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
